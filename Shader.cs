@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,19 @@ namespace Opgave_1___OpenTK
         public int GetAttribLocation(string attribName)
         {
             return GL.GetAttribLocation(Handle, attribName);
+        }
+
+        public void SetInt(string name, int value)
+        {
+            int location = GL.GetUniformLocation(Handle, name);
+
+            GL.Uniform1(location, value);
+        }
+
+        public void SetMatrix(string name, Matrix4 transform)
+        {
+            int location = GL.GetUniformLocation(Handle, name);
+            GL.UniformMatrix4(location, true, ref transform);
         }
     }
 

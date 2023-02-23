@@ -6,16 +6,19 @@ layout (location = 1) in vec2 aTexCoord;
 out vec3 v2fColor;
 
 out vec2 texCoord;
-//out vec4 colorToSendToFrag;
 
-void main()
+uniform mat4 transform;
+
+//uniform mat4 model;
+//uniform mat4 view;
+//uniform mat4 projection;
+
+uniform mat4 mvp;
+
+void main(void)
 {
-//	colorToSendToFrag = vec4(aPosition, 1);
-//	gl_Position = vec4(aPosition, 1.0);
-
 	texCoord = aTexCoord;
 
-	gl_Position = vec4(aPosition, 1.0);
-	//ourColor = aColor;
+	gl_Position = vec4(aPosition, 1.0) * mvp;
 
 }
