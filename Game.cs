@@ -16,6 +16,16 @@ namespace Opgave_1___OpenTK
     {
         float rotation = 45;
 
+        float rotationX3D = -55;
+
+        float rotationY3D = -55;
+
+        float rotationZ3D = -55;
+
+
+        float scale3D = 1;
+
+        float position3D;
 
         public Game(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
@@ -49,14 +59,24 @@ namespace Opgave_1___OpenTK
                 Close();
             }
 
+            //if (input.IsKeyDown(Keys.E))
+            //{
+            //    rotation -= 0.1f;
+            //}
+
+            //else if (input.IsKeyDown(Keys.Q))
+            //{
+            //    rotation += 0.1f;
+            //}
+
             if (input.IsKeyDown(Keys.E))
             {
-                rotation -= 0.1f;
+                rotationX3D -= 1f;
             }
 
             else if (input.IsKeyDown(Keys.Q))
             {
-                rotation += 0.1f;
+                rotationX3D += 1f;
             }
 
             CalculateAndSetTransform();
@@ -222,7 +242,14 @@ namespace Opgave_1___OpenTK
             shader.SetMatrix("transform", trs);
 
 
-            Matrix4 model = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-55.0f));
+            //Matrix4 model = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotation3D));
+
+            Matrix4 model = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotationX3D));
+
+            Matrix4.CreateRotationY(MathHelper.DegreesToRadians(rotationY3D));
+            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotationZ3D));
+
+
             Matrix4 view = Matrix4.CreateTranslation(0.0f, 0.0f, -3f);
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), (float)Size.X / (float)Size.Y, 0.1f, 100.0f);
             //shader.SetMatrix("model", model);
