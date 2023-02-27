@@ -1,0 +1,15 @@
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\bin\Debug\net6.0\FPS_Proejct.exe
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\bin\Debug\net6.0\FPS_Proejct.deps.json
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\bin\Debug\net6.0\FPS_Proejct.runtimeconfig.json
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\bin\Debug\net6.0\FPS_Proejct.dll
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\bin\Debug\net6.0\FPS_Proejct.pdb
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.csproj.AssemblyReference.cache
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.GeneratedMSBuildEditorConfig.editorconfig
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.AssemblyInfoInputs.cache
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.AssemblyInfo.cs
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.csproj.CoreCompileInputs.cache
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.dll
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\refint\FPS_Proejct.dll
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.pdb
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\FPS_Proejct.genruntimeconfig.cache
+E:\OneDrive - EaDania\Bachelor - Softwareudvikler\1. semester\ComputerGrafik 1\FPS_Proejct\obj\Debug\net6.0\ref\FPS_Proejct.dll
