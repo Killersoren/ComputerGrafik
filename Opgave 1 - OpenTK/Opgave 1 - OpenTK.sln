@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_FPS", "..\Project_F
 		{9CC84780-9EF6-4585-8416-A342582397D7} = {9CC84780-9EF6-4585-8416-A342582397D7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "..\ClassLibrary\ClassLibrary.csproj", "{9CC84780-9EF6-4585-8416-A342582397D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary", "..\ClassLibrary\ClassLibrary.csproj", "{9CC84780-9EF6-4585-8416-A342582397D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibraryFps", "..\ClassLibraryFps\ClassLibraryFps.csproj", "{7552839C-418B-452D-9A78-FE46141C62EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{9CC84780-9EF6-4585-8416-A342582397D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC84780-9EF6-4585-8416-A342582397D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CC84780-9EF6-4585-8416-A342582397D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7552839C-418B-452D-9A78-FE46141C62EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7552839C-418B-452D-9A78-FE46141C62EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7552839C-418B-452D-9A78-FE46141C62EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7552839C-418B-452D-9A78-FE46141C62EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
