@@ -1,5 +1,25 @@
-﻿// See https://aka.ms/new-console-template for more information
-using ClassLibrary;
+﻿using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 
-Console.WriteLine("Hello, World!");
+namespace Project_FPS
+{
+    public static class Program
+    {
+        private static void Main()
+        {
+            var nativeWindowSettings = new NativeWindowSettings()
+            {
+                Size = new Vector2i(800, 600),
+                Title = "FPS project",
+                // This is needed to run on macos
+                //Flags = ContextFlags.ForwardCompatible,
+            };
 
+            using (var game = new Game(GameWindowSettings.Default, nativeWindowSettings))
+            {
+                game.Run();
+            }
+        }
+    }
+}
