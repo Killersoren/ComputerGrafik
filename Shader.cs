@@ -70,6 +70,12 @@ namespace Opgave_1___OpenTK
             GL.Uniform1(location, value);
         }
 
+        public void SetFloat(string name, float value)
+        {
+            int location = GL.GetUniformLocation(Handle, name);
+            GL.Uniform1(location, (float)value);
+        }
+
         public void SetMatrix(string name, Matrix4 transform)
         {
             int location = GL.GetUniformLocation(Handle, name);
