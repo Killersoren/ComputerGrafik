@@ -1,0 +1,15 @@
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\bin\Debug\net6.0\FPS_Project.exe
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\bin\Debug\net6.0\FPS_Project.deps.json
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\bin\Debug\net6.0\FPS_Project.runtimeconfig.json
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\bin\Debug\net6.0\FPS_Project.dll
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\bin\Debug\net6.0\FPS_Project.pdb
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.csproj.AssemblyReference.cache
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.AssemblyInfoInputs.cache
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.AssemblyInfo.cs
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.csproj.CoreCompileInputs.cache
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.dll
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\refint\FPS_Project.dll
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.pdb
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\FPS_Project.genruntimeconfig.cache
+C:\Users\frede\Documents\GitHub\ComputerGrafik\FPS_Proejct\obj\Debug\net6.0\ref\FPS_Project.dll

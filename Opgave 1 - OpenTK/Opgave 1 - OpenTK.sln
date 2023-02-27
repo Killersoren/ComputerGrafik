@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPS_Proejct", "..\FPS_Proejct\FPS_Proejct.csproj", "{51C3EAB3-8177-45AC-8C5A-4EF0C99BFBD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FPS_Project", "..\FPS_Proejct\FPS_Project.csproj", "{51C3EAB3-8177-45AC-8C5A-4EF0C99BFBD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

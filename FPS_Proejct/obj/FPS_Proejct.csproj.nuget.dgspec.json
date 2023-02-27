@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\OneDrive - EaDania\\Bachelor - Softwareudvikler\\1. semester\\ComputerGrafik 1\\FPS_Proejct\\FPS_Proejct.csproj": {}
+    "C:\\Users\\frede\\Documents\\GitHub\\ComputerGrafik\\FPS_Proejct\\FPS_Proejct.csproj": {}
   },
   "projects": {
-    "E:\\OneDrive - EaDania\\Bachelor - Softwareudvikler\\1. semester\\ComputerGrafik 1\\FPS_Proejct\\FPS_Proejct.csproj": {
+    "C:\\Users\\frede\\Documents\\GitHub\\ComputerGrafik\\FPS_Proejct\\FPS_Proejct.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\OneDrive - EaDania\\Bachelor - Softwareudvikler\\1. semester\\ComputerGrafik 1\\FPS_Proejct\\FPS_Proejct.csproj",
+        "projectUniqueName": "C:\\Users\\frede\\Documents\\GitHub\\ComputerGrafik\\FPS_Proejct\\FPS_Proejct.csproj",
         "projectName": "FPS_Proejct",
-        "projectPath": "E:\\OneDrive - EaDania\\Bachelor - Softwareudvikler\\1. semester\\ComputerGrafik 1\\FPS_Proejct\\FPS_Proejct.csproj",
-        "packagesPath": "C:\\Users\\skmj\\.nuget\\packages\\",
-        "outputPath": "E:\\OneDrive - EaDania\\Bachelor - Softwareudvikler\\1. semester\\ComputerGrafik 1\\FPS_Proejct\\obj\\",
+        "projectPath": "C:\\Users\\frede\\Documents\\GitHub\\ComputerGrafik\\FPS_Proejct\\FPS_Proejct.csproj",
+        "packagesPath": "C:\\Users\\frede\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\frede\\Documents\\GitHub\\ComputerGrafik\\FPS_Proejct\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\skmj\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\frede\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -49,8 +45,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -59,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
