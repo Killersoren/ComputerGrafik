@@ -36,8 +36,8 @@ namespace Project_FPS
         {
             base.OnLoad();
 
-            texture0 = new Texture("Textures/box_top.png");
-            texture1 = new Texture("Textures/box_side.png");
+            texture0 = new Texture("Textures/box_side.png");
+            texture1 = new Texture("Textures/box_x2.png");
             Dictionary<string, object> uniforms = new Dictionary<string, object>();
             uniforms.Add("texture0", texture0);
             uniforms.Add("texture1", texture1);
