@@ -11,7 +11,8 @@ GameWindowSettings settings = new GameWindowSettings()
 
 NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
 {
-    Size = new Vector2i(1280, 720),
+    
+    Size = new Vector2i(1920, 1080),/*(1280, 720),*/
     Title = "FPS Project"
 };
 

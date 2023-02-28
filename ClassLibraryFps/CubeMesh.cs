@@ -9,6 +9,7 @@ namespace ClassLibraryFps
         private static bool buffersCreated;
         protected override float[] Vertices => new float[]
         {
+            // Back face
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
              0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
              0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -16,27 +17,66 @@ namespace ClassLibraryFps
             -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-             0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-             0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            // Front face
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // modified texture coordinate (from "0.0f, 0.0f," to "0.0f, 1.0f")
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // modified texture coordinate (from "1.0f, 0.0f," to "1.0f, 1.0f")
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // modified texture coordinate (from "1.0f, 1.0f," to "1.0f, 0.0f")
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // modified texture coordinate (from "1.0f, 1.0f," to "1.0f, 0.0f")
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // modified texture coordinate (from "0.0f, 1.0f," to "0.0f, 0.0f")
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // modified texture coordinate (from "0.0f, 0.0f," to "0.0f, 1.0f")
+
+
+            //// Left face
+            //-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            //-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // modified texture coordinate (from "1.0f, 1.0f," to "0.0f, 0.0f")
+            //-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
+            //-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 
+            //-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // modified texture coordinate (from "0.0f, 0.0f," to "1.0f, 1.0f")
+            //-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // modified texture coordinate (from "1.0f, 0.0f," to "1.0f, 1.0f")
+
+            //// Left face (rotated 90 degrees clockwise)
+            //-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+            //-0.5f,  0.5f, -0.5f,  1.0f, 0.0f,
+            //-0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+            //-0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+            //-0.5f, -0.5f,  0.5f,  0.0f, 1.0f,
+            //-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+
+            // Left face (rotated 90 degrees counter clockwise)
             -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
             -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
             -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
 
-             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+             //// Right face
+             //0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // modified texture coordinate (from "1.0f, 0.0f," to "0.0f, 0.0f")
+             //0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             //0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // modified texture coordinate (from "0.0f, 1.0f," to "1.0f, 0.0f")
+             //0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // modified texture coordinate (from "0.0f, 1.0f," to "1.0f, 1.0f")
+             //0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+             //0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // modified texture coordinate (from "1.0f, 0.0f," to "0.0f, 1.0f")
+
+             //// Right face (rotated 90 degrees clockwise)
+             //0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+             //0.5f,  0.5f, -0.5f,  1.0f, 0.0f,
+             //0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+             //0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+             //0.5f, -0.5f,  0.5f,  0.0f, 1.0f,
+             //0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+
+             // Right face (rotated 90 degrees counter clockwise)
+             0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
              0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-             0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-             0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
              0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
 
+
+             // Bottom face
             -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
              0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
              0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
@@ -44,12 +84,13 @@ namespace ClassLibraryFps
             -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
             -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+            // Top face
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // modified texture coordinate (from "0.0f, 1.0f," to "1.0f, 1.0f")
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // modified texture coordinate (from "1.0f, 1.0f," to "0.0f, 1.0f")
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // modified texture coordinate (from "1.0f, 0.0f," to "0.0f, 0.0f")
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // modified texture coordinate (from "1.0f, 0.0f," to "0.0f, 0.0f")
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, // modified texture coordinate (from "0.0f, 0.0f," to "1.0f, 0.0f")
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f  // modified texture coordinate (from "0.0f, 1.0f," to "1.0f, 1.0f")
         };
 
         protected override void GenerateBuffers()

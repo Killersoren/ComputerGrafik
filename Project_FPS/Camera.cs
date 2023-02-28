@@ -9,7 +9,7 @@ namespace Project_FPS
         Vector3 front = new Vector3(0.0f, 0.0f, -1.0f);
         Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
         Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
-        float speed = 1;
+        float speed = 3;
         // Rotation around the Y axis (radians)
         private float FOV = MathHelper.PiOver2;
         private float aspectX;
@@ -21,7 +21,7 @@ namespace Project_FPS
         private float pitch;
 
         // This is simply the aspect ratio of the viewport, used for the projection matrix.
-        public float AspectRatio { private get; set; }
+        //public float AspectRatio { private get; set; }
 
         // Rotation around the Y axis (radians)
         private float yaw = -MathHelper.PiOver2; // Without this, you would be started rotated 90 degrees right.
@@ -107,22 +107,22 @@ namespace Project_FPS
         public override void Update(FrameEventArgs args)
         {
             KeyboardState input = window.KeyboardState;
-            if (input.IsKeyDown(Keys.W))
-            {
-                gameObject.transform.Position += front * speed * (float)args.Time; //Forward 
-            }
-            if (input.IsKeyDown(Keys.S))
-            {
-                gameObject.transform.Position -= front * speed * (float)args.Time; //Backwards
-            }
-            if (input.IsKeyDown(Keys.A))
-            {
-                gameObject.transform.Position -= /*Vector3.Normalize(Vector3.Cross(front, up))*/right * speed * (float)args.Time; //Left
-            }
-            if (input.IsKeyDown(Keys.D))
-            {
-                gameObject.transform.Position += /*Vector3.Normalize(Vector3.Cross(front, up))*/right * speed * (float)args.Time; //Right
-            }
+            //if (input.IsKeyDown(Keys.W))
+            //{
+            //    gameObject.transform.Position += front * speed * (float)args.Time; //Forward 
+            //}
+            //if (input.IsKeyDown(Keys.S))
+            //{
+            //    gameObject.transform.Position -= front * speed * (float)args.Time; //Backwards
+            //}
+            //if (input.IsKeyDown(Keys.A))
+            //{
+            //    gameObject.transform.Position -= /*Vector3.Normalize(Vector3.Cross(front, up))*/right * speed * (float)args.Time; //Left
+            //}
+            //if (input.IsKeyDown(Keys.D))
+            //{
+            //    gameObject.transform.Position += /*Vector3.Normalize(Vector3.Cross(front, up))*/right * speed * (float)args.Time; //Right
+            //}
             if (input.IsKeyDown(Keys.Space))
             {
                 gameObject.transform.Position += up * speed * (float)args.Time; //Up 
@@ -131,6 +131,50 @@ namespace Project_FPS
             if (input.IsKeyDown(Keys.LeftShift))
             {
                 gameObject.transform.Position -= up * speed * (float)args.Time; //Down
+            }
+
+
+
+
+            // without camera orientation
+            //if (input.IsKeyDown(Keys.W))
+            //{
+            //    gameObject.transform.Position += new Vector3(0, 0, -1) * speed * (float)args.Time; // Forward
+            //}
+            //if (input.IsKeyDown(Keys.S))
+            //{
+            //    gameObject.transform.Position += new Vector3(0, 0, 1) * speed * (float)args.Time; // Backwards
+            //}
+            //if (input.IsKeyDown(Keys.D))
+            //{
+            //    gameObject.transform.Position -= Vector3.Normalize(Vector3.Cross(new Vector3(0, 1, 0), new Vector3(0, 0, -1))) * speed * (float)args.Time; // Left
+            //}
+            //if (input.IsKeyDown(Keys.A))
+            //{
+            //    gameObject.transform.Position += Vector3.Normalize(Vector3.Cross(new Vector3(0, 1, 0), new Vector3(0, 0, -1))) * speed * (float)args.Time; // Right
+            //}
+
+
+
+            // with camera orientation but cannot move on the y-axis
+            Vector3 forward = new Vector3(front.X, 0, front.Z);
+            Vector3 rightDir = new Vector3(right.X, 0, right.Z);
+            
+            if (input.IsKeyDown(Keys.W))
+            {
+                gameObject.transform.Position += Vector3.Normalize(forward) * speed * (float)args.Time; // Forward 
+            }
+            if (input.IsKeyDown(Keys.S))
+            {
+                gameObject.transform.Position -= Vector3.Normalize(forward) * speed * (float)args.Time; // Backwards
+            }
+            if (input.IsKeyDown(Keys.A))
+            {
+                gameObject.transform.Position -= Vector3.Normalize(rightDir) * speed * (float)args.Time; // Left
+            }
+            if (input.IsKeyDown(Keys.D))
+            {
+                gameObject.transform.Position += Vector3.Normalize(rightDir) * speed * (float)args.Time; // Right
             }
         }
     }

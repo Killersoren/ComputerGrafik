@@ -1,10 +1,13 @@
 ﻿using ClassLibrary;
 using ClassLibraryFps;
+using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Input;
 using System.Diagnostics;
 
 namespace Project_FPS
@@ -18,10 +21,14 @@ namespace Project_FPS
 
         private Vector2 lastPosition;
 
+       
+
         public Game(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
             GL.ClearColor(clearColor);
             settings = nativeWindowSettings;
+            // center window
+            this.CenterWindow();
         }
 
         Stopwatch stopwatch = new Stopwatch();
@@ -61,7 +68,7 @@ namespace Project_FPS
         protected override void OnUnload()
         {
             base.OnUnload();
-
+            
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
@@ -69,11 +76,15 @@ namespace Project_FPS
         {
             base.OnRenderFrame(args);
 
+            GameObject gameObject;
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             gameObjects.ForEach(x => x.Draw(camera.GetViewMatrix()));
 
             SwapBuffers();
+
+            //if(gameObject.transform.Position.X == )
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -87,12 +98,17 @@ namespace Project_FPS
         {
             base.OnUpdateFrame(args);
 
-            //const float cameraSpeed = 1.5f;
             const float sensitivity = 0.2f;
 
             gameObjects.ForEach(x => x.Update(args));
 
-            var mouse = MouseState;
+            KeyboardState input = KeyboardState;
+            MouseState mouse = MouseState;
+
+            if (input.IsKeyDown(Keys.Escape))
+            {
+                Close();
+            }
 
             if (firstMove)
             {

@@ -5,6 +5,9 @@ namespace ClassLibraryFps
     public class Mesh
     {
         protected virtual float[] Vertices { get; }
+
+        protected virtual float[] Vertices2 { get; }
+
         protected virtual uint[] Indices { get; }
         int vertexArrayObject;
         int elementBufferObject;
