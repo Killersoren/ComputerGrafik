@@ -61,7 +61,6 @@ namespace Opgave_1___OpenTK.RendererStuff
         {
             GenerateBuffers(); //setup based on vertices, indices, etc
 
-
         }
         public virtual void Draw()
         {

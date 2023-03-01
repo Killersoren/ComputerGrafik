@@ -15,6 +15,8 @@ namespace Opgave_1___OpenTK
     internal class Game : GameWindow
 
     {
+        
+
         float rotation = 45;
 
         float rotationX3D = -55;
@@ -30,27 +32,14 @@ namespace Opgave_1___OpenTK
 
         List<GameObject> gameObjects = new List<GameObject> ();
 
+        private int vaoHandle, vboHandle, eboHandle;
+        private int numElements;
+
+
         public Game(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
             GL.ClearColor(0.5f, 0.2f, 0.7f, 1.0f);
         }
-
-
-
-        //protected override void OnRenderFrame(FrameEventArgs args)
-        //{
-        //    base.OnRenderFrame(args);
-        //    GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-        //   // GL.Clear(ClearBufferMask.ColorBufferBit);
-        //    GL.BindVertexArray(vertexArrayObject);
-        //    // GL.DrawArrays(PrimitiveType.TriangleFan, 0, vertices.Length/3);
-        //    texture0.Use(TextureUnit.Texture0);
-        //    texture1.Use(TextureUnit.Texture1);
-        //    shader.Use();
-        //    //GL.DrawElements(PrimitiveType.TriangleFan, indices.Length, DrawElementsType.UnsignedInt, 0);
-        //    GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
-        //    SwapBuffers();
-        //}
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
@@ -60,6 +49,14 @@ namespace Opgave_1___OpenTK
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60.0f),
             (float)Size.X / (float)Size.Y, 0.3f, 1000.0f);
             gameObjects.ForEach(x => x.Draw(view * projection));
+
+
+            ////3D model test stuff
+            //GL.BindVertexArray(vaoHandle);
+            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
+            //GL.DrawElements(PrimitiveType.Triangles, numElements, DrawElementsType.UnsignedInt, 0);
+
+
             SwapBuffers();
         }
 
@@ -147,12 +144,56 @@ namespace Opgave_1___OpenTK
             cube.transform.Position = (1,0,0);
 
 
-            GameObject cam = new GameObject(null, this);
+           // GameObject cam = new GameObject(null, this);
             //cam.AddComponent<Camera>(60.0f, (float)Size.X, (float)Size.Y, 0.3f, 1000.0f);
             //camera = cam.GetComponent<Camera>();
-            gameObjects.Add(cam);
+          //  gameObjects.Add(cam);
             GL.Enable(EnableCap.DepthTest);
-           // watch.Start();
+            // watch.Start();
+
+
+
+            //3D model test stuff
+            var loader = new ObjLoader();
+
+            var model = loader.Load("Models/cactus.obj");
+            //var model = loader.Load("Models/Cup.obj");
+
+            Renderer rendModel = new Renderer(mat, model);
+
+        //    GameObject modelGameObject = new GameObject(model, this);
+
+            GameObject modelGameObject = new GameObject(rendModel, this);
+
+
+            gameObjects.Add(modelGameObject);
+
+            //// Create vertex buffer
+            //GL.GenBuffers(1, out vboHandle);
+            //GL.BindBuffer(BufferTarget.ArrayBuffer, vboHandle);
+            //GL.BufferData(BufferTarget.ArrayBuffer, model.Vertices.Length * Vector3.SizeInBytes, model.Vertices, BufferUsageHint.StaticDraw);
+
+            //// Create element buffer
+            //GL.GenBuffers(1, out eboHandle);
+            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
+            //GL.BufferData(BufferTarget.ElementArrayBuffer, model.Indices.Length * sizeof(int), model.Indices, BufferUsageHint.StaticDraw);
+            //numElements = model.Indices.Length;
+
+            //// Create vertex array object
+            //GL.GenVertexArrays(1, out vaoHandle);
+            //GL.BindVertexArray(vaoHandle);
+            //GL.EnableVertexAttribArray(0);
+            //GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
+
+            model.transform.Position = (-1, 0, 0);
+            //Console.WriteLine(model.transform.Position);
+
+            Console.WriteLine("elements count " + model.NumElements);
+
+
+            // Load shaders
+            shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+            shader.Use();
         }
 
         protected override void OnUnload()
@@ -176,9 +217,6 @@ namespace Opgave_1___OpenTK
 
             srt = t * r * s;
             shader.SetMatrix("transform", trs);
-
-
-            //Matrix4 model = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotation3D));
 
             Matrix4 model = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotationX3D));
 
