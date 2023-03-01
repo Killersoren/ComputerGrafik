@@ -3,7 +3,11 @@ using StbImageSharp;
 
 public class Texture
 {
+    #region Field
     int handle;
+    #endregion
+
+    #region Constructor
     public Texture(string path)
     {
         handle = GL.GenTexture();
@@ -22,9 +26,13 @@ public class Texture
         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
     }
+    #endregion
+
+    #region Method
     public void Use(TextureUnit unit = 0)
     {
         GL.ActiveTexture(unit);
         GL.BindTexture(TextureTarget.Texture2D, handle);
     }
+    #endregion
 }

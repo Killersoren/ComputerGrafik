@@ -4,7 +4,11 @@ using OpenTK.Mathematics;
 
 public class Shader
 {
+    #region Field
     public int Handle;
+    #endregion
+
+    #region Constructor
     public Shader(string vertexPath, string fragmentPath)
     {
 
@@ -34,8 +38,10 @@ public class Shader
         GL.DetachShader(Handle, fragmentShader);
         GL.DeleteShader(fragmentShader);
         GL.DeleteShader(vertexShader);
-
     }
+    #endregion
+
+    #region Methods
     private void CompileShader(int shader)
     {
         GL.CompileShader(shader);
@@ -57,20 +63,24 @@ public class Shader
             throw new Exception($"Error occurred whilst linking Program({program})");
         }
     }
+
     public void Use()
     {
         GL.UseProgram(Handle);
     }
+
     public int GetAttribLocation(string attribName)
     {
         return GL.GetAttribLocation(Handle, attribName);
     }
+
     public void SetInt(string name, int value)
     {
         int location = GL.GetUniformLocation(Handle, name);
 
         GL.Uniform1(location, value);
     }
+
     public void SetFloat(string name, float value)
     {
         int location = GL.GetUniformLocation(Handle, name);
@@ -82,5 +92,6 @@ public class Shader
         int location = GL.GetUniformLocation(Handle, name);
         GL.UniformMatrix4(location, true, ref transform);
     }
+    #endregion
 }
 

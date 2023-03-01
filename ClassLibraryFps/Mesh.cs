@@ -4,11 +4,15 @@ namespace ClassLibraryFps
 {
     public class Mesh
     {
+        #region Properties
         protected virtual float[] Vertices { get; }
 
         protected virtual float[] Vertices2 { get; }
 
         protected virtual uint[] Indices { get; }
+        #endregion
+
+        #region Fields
         int vertexArrayObject;
         int elementBufferObject;
         int vertexBufferObject;
@@ -25,10 +29,16 @@ namespace ClassLibraryFps
             0, 1, 3,   // first triangle
             1, 2, 3    // second triangle
         };
+        #endregion
+
+        #region Constructor
         public Mesh()
         {
             GenerateBuffers();
         }
+        #endregion
+
+        #region Methods
         protected virtual void GenerateBuffers()
         {
             vertexBufferObject = GL.GenBuffer();
@@ -55,5 +65,6 @@ namespace ClassLibraryFps
             GL.BindVertexArray(vertexArrayObject);
             GL.DrawElements(PrimitiveType.Triangles, indices.Length, DrawElementsType.UnsignedInt, 0);
         }
+        #endregion
     }
 }

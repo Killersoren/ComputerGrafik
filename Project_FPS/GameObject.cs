@@ -7,11 +7,15 @@ namespace Project_FPS
 {
     public class GameObject
     {
+        #region Fields
         public Transform transform;
         public Renderer renderer;
         protected GameWindow gameWindow;
 
         List<Behaviour> behaviours = new List<Behaviour>();
+        #endregion
+
+        #region Generic Methods
         public T GetComponent<T>() where T : Behaviour
         {
             foreach (Behaviour component in behaviours)
@@ -21,6 +25,7 @@ namespace Project_FPS
             }
             return null;
         }
+        
         public void AddComponent<T>(params object?[]? args) where T : Behaviour
         {
             if (args == null)
@@ -42,14 +47,18 @@ namespace Project_FPS
                 behaviours.Add(Activator.CreateInstance(typeof(T), objects) as T);
             }
         }
+        #endregion
 
+        #region Constructor
         public GameObject(Renderer renderer, Project_FPS.Game gameWindow)
         {
             this.renderer = renderer;
             this.gameWindow = gameWindow;
             transform = new Transform();
         }
+        #endregion
 
+        #region Methods
         public void Update(FrameEventArgs args)
         {
             foreach (Behaviour behaviour in behaviours)
@@ -66,5 +75,6 @@ namespace Project_FPS
 
             }
         }
+        #endregion
     }
 }

@@ -14,22 +14,17 @@ namespace Project_FPS
 {
     public class Game : GameWindow
     {
+        #region Fields
         NativeWindowSettings settings;
-        Color4 clearColor = new Color4(0.2f, 0.3f, 0.3f, 1.0f);
+
+        Color4 clearColor = new Color4(0.2f, 0.3f, 0.3f, 1.0f); // Background color
 
         private bool firstMove = true;
+        private Vector2 lastPosition; // The camera's last position
 
-        private Vector2 lastPosition;
-
-       
-
-        public Game(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
-        {
-            GL.ClearColor(clearColor);
-            settings = nativeWindowSettings;
-            // center window
-            this.CenterWindow();
-        }
+        private float fieldOfView = 60.0f; // Determines how much of the scene i visible through the camera lens.
+        private float nearClipPlane = 0.3f; // The distance from the camera to the near clipping plane. It's the closest distance from the camera at which objects will be rendered.
+        private float farClipPlane = 1000.0f; // The distance from the camera to the far clipping plane. The farthest distance from the camera at which objects will be rendered
 
         Stopwatch stopwatch = new Stopwatch();
 
@@ -38,31 +33,58 @@ namespace Project_FPS
         List<GameObject> gameObjects = new List<GameObject>();
 
         Camera camera;
+        #endregion
 
+        #region Constructor
+        public Game(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
+        {
+            // Set the color of the background
+            GL.ClearColor(clearColor);
+            // Used to access the settings for the game window
+            settings = nativeWindowSettings;
+            // The game window is centered in the center of the screen
+            this.CenterWindow();
+        }
+        #endregion
+
+        #region Methods
         protected override void OnLoad()
         {
             base.OnLoad();
 
+            // Creates two textures for the CubeMesh
             texture0 = new Texture("Textures/box_side.png");
             texture1 = new Texture("Textures/box_x2.png");
+            // Creates a Dictionary
             Dictionary<string, object> uniforms = new Dictionary<string, object>();
-            uniforms.Add("texture0", texture0);
-            uniforms.Add("texture1", texture1);
+            uniforms.Add("texture0", texture0); // Add texture0 to the dictionary
+            uniforms.Add("texture1", texture1); // Add texture1 to the dictionary
 
+            // Creates a new Material object by passing the two shader files and the uniforms dictionary as parameters
             Material material = new Material("Shaders/shader2.vert", "Shaders/shader2.frag", uniforms);
 
+            // Creates a Renderer object by passing the Material object and a CubeMesh object as parameters
             Renderer renderCube = new Renderer(material, new CubeMesh());
+            
+            // Creates a cube GameObject by passing the Renderer object and the current GameWindow object (this)
             GameObject cube = new GameObject(renderCube, this);
-            gameObjects.Add(cube);
+            gameObjects.Add(cube); // Add the cube to the List of GameObjects
 
+            // Creates a camera GameObject by passing null and the current GameWindow object (this)
             GameObject cam = new GameObject(null, this);
-            cam.AddComponent<Camera>(60.0f, (float)Size.X, (float)Size.Y, 0.3f, 1000.0f);
+            // AddComponent method adds a new Camera component to a GameObject
+            // The Camera's constructor takes 4 parameters: fieldOfView, aspectRatio(x,y), nearClipPlane, farClipPlane
+            // The aspectRatio here is the Size of the GameWindow's window size. It is the ratio of the width and height of the camera's view.
+            cam.AddComponent<Camera>(fieldOfView, (float)Size.X, (float)Size.Y, nearClipPlane, farClipPlane);
+            // The Camera class is set equal to the camera GameObject
             camera = cam.GetComponent<Camera>();
+            // The camera is added to the list of GameObjects
             gameObjects.Add(cam);
 
+            // DepthTest is a technique used to ensure objects are rendered in the correct order
             GL.Enable(EnableCap.DepthTest);
 
-            stopwatch.Start();
+            stopwatch.Start(); // Start stopwatch. Used to measure elapsed time in the game
         }
 
         protected override void OnUnload()
@@ -83,16 +105,14 @@ namespace Project_FPS
             gameObjects.ForEach(x => x.Draw(camera.GetViewMatrix()));
 
             SwapBuffers();
-
-            //if(gameObject.transform.Position.X == )
         }
 
-        protected override void OnResize(ResizeEventArgs e)
-        {
-            base.OnResize(e);
+        //protected override void OnResize(ResizeEventArgs e)
+        //{
+        //    base.OnResize(e);
 
-            GL.Viewport(0, 0, Size.X, Size.Y);
-        }
+        //    GL.Viewport(0, 0, Size.X, Size.Y);
+        //}
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
@@ -133,12 +153,11 @@ namespace Project_FPS
             camera.Fov -= args.OffsetY;
         }
 
+        #endregion
 
 
 
-
-
-
+        #region ClassLibrary Project
         //private Model crateModel;
         //private Shader crateShader;
         //private Texture crateTexture;
@@ -274,5 +293,6 @@ namespace Project_FPS
         //    GL.Viewport(0, 0, Size.X, Size.Y);
         //    camera.AspectRatio = Size.X / (float)Size.Y;
         //}
+        #endregion
     }
 }

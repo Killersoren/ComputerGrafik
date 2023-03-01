@@ -5,10 +5,13 @@ namespace ClassLibraryFps
 {
     public class Material
     {
+        #region Fields
         Shader shader;
         Dictionary<string, object> uniforms = new Dictionary<string, object>();
         Dictionary<int, Texture> textures = new Dictionary<int, Texture>();
+        #endregion
 
+        #region Constructor
         public Material(string vertPath, string fragPath, Dictionary<string, object> uniforms)
         {
             shader = new Shader(vertPath, fragPath);
@@ -17,7 +20,9 @@ namespace ClassLibraryFps
                 SetUniform(uniform.Key, uniform.Value);
             }
         }
+        #endregion
 
+        #region Methods
         public void SetUniform(string name, object uniform)
         {
             //Need to activate the shader before setting uniforms :) 
@@ -58,5 +63,6 @@ namespace ClassLibraryFps
             shader.Use();
 
         }
+        #endregion
     }
 }
