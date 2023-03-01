@@ -7,7 +7,7 @@ namespace Project_FPS
     public class Camera : Behaviour
     {
         #region Fields
-        Vector3 front = new Vector3(0.0f, 0.0f, -1.0f);
+        public Vector3 front = new Vector3(0.0f, 0.0f, -1.0f);
         Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
         Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
 
@@ -23,11 +23,11 @@ namespace Project_FPS
         private bool isCrouching = false;
 
         // Rotation around the Y axis (radians)
-        private float FOV = MathHelper.PiOver2;
+        public float FOV = MathHelper.PiOver2;
         private float aspectX;
         private float aspectY;
-        private float near = 0.01f;
-        private float far = 100;
+        public float near = 0.01f;
+        public float far = 100;
 
         // Rotation around the X axis (radians)
         private float pitch;
@@ -162,7 +162,7 @@ namespace Project_FPS
                 //float jumpOffset = (float)Math.Sin(jumpTime * 10f) * jumpHeight;
                 gameObject.transform.Position = new Vector3(
                     gameObject.transform.Position.X,
-                    /*jumpOffset + */jumpHeight,
+                    jumpHeight,
                     gameObject.transform.Position.Z
                 );
 

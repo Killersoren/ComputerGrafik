@@ -22,6 +22,7 @@ namespace Project_FPS
         private bool firstMove = true;
         private Vector2 lastPosition; // The camera's last position
 
+        const float mouseSensitivity = 0.2f;
         private float fieldOfView = 60.0f; // Determines how much of the scene i visible through the camera lens.
         private float nearClipPlane = 0.3f; // The distance from the camera to the near clipping plane. It's the closest distance from the camera at which objects will be rendered.
         private float farClipPlane = 1000.0f; // The distance from the camera to the far clipping plane. The farthest distance from the camera at which objects will be rendered
@@ -55,6 +56,7 @@ namespace Project_FPS
             // Creates two textures for the CubeMesh
             texture0 = new Texture("Textures/box_side.png");
             texture1 = new Texture("Textures/box_x2.png");
+            
             // Creates a Dictionary
             Dictionary<string, object> uniforms = new Dictionary<string, object>();
             uniforms.Add("texture0", texture0); // Add texture0 to the dictionary
@@ -72,12 +74,16 @@ namespace Project_FPS
 
             // Creates a camera GameObject by passing null and the current GameWindow object (this)
             GameObject cam = new GameObject(null, this);
+
             // AddComponent method adds a new Camera component to a GameObject
             // The Camera's constructor takes 4 parameters: fieldOfView, aspectRatio(x,y), nearClipPlane, farClipPlane
-            // The aspectRatio here is the Size of the GameWindow's window size. It is the ratio of the width and height of the camera's view.
+            // The aspect ratio here is the Size of the GameWindow's window size.
+            // The aspect ratio is the ratio of the width and height of the camera's view (Size.X, Size.Y).
             cam.AddComponent<Camera>(fieldOfView, (float)Size.X, (float)Size.Y, nearClipPlane, farClipPlane);
+
             // The Camera class is set equal to the camera GameObject
             camera = cam.GetComponent<Camera>();
+
             // The camera is added to the list of GameObjects
             gameObjects.Add(cam);
 
@@ -91,6 +97,9 @@ namespace Project_FPS
         {
             base.OnUnload();
             
+            // Binds an empty buffer to the ArrayBuffer target, which unbinds any previous bound buffer.
+            // This is good practice. It ensures that any resources bound to the graphics pipeline are
+            // released when the game window is closed.
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
@@ -98,51 +107,63 @@ namespace Project_FPS
         {
             base.OnRenderFrame(args);
 
-            GameObject gameObject;
-
+            // Clears the color and depth buffers of the frame.
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            gameObjects.ForEach(x => x.Draw(camera.GetViewMatrix()));
+            // ForEach-loop which draws every camera in the list of gameObjects (with the camera's view matrix)
+            foreach (GameObject go in gameObjects)
+            {
+                go.Draw(camera.GetViewMatrix());
+            }
 
+            // Swaps the front and back buffers of the game window
+            // to display the rendered frame on the screen
             SwapBuffers();
         }
-
-        //protected override void OnResize(ResizeEventArgs e)
-        //{
-        //    base.OnResize(e);
-
-        //    GL.Viewport(0, 0, Size.X, Size.Y);
-        //}
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
 
-            const float sensitivity = 0.2f;
+            if (!IsFocused) // Check to see if the window is focused
+            {
+                return;
+            }
 
-            gameObjects.ForEach(x => x.Update(args));
+            // ForEach-loop which updates every game object in the list of gameObjects
+            foreach (GameObject go in gameObjects)
+            {
+                go.Update(args);
+            }
 
             KeyboardState input = KeyboardState;
             MouseState mouse = MouseState;
+            Vector2 currentPosition = new Vector2(mouse.X, mouse.Y);
 
+            // Press Escape to close the game window
             if (input.IsKeyDown(Keys.Escape))
             {
                 Close();
             }
 
+            // Indicates if this is the first time the mouse has been moved.
             if (firstMove)
             {
-                lastPosition = new Vector2(mouse.X, mouse.Y);
+                // lastPosition is set to the current mouse position.
+                lastPosition = currentPosition;
                 firstMove = false;
             }
             else
             {
-                var deltaX = mouse.X - lastPosition.X;
-                var deltaY = mouse.Y - lastPosition.Y;
-                lastPosition = new Vector2(mouse.X, mouse.Y);
+                // Calculates the change in the mouse position since the last frame.
+                var deltaX = currentPosition.X - lastPosition.X;
+                var deltaY = currentPosition.Y - lastPosition.Y;
+                // lastPosition is set to the current mouse position.
+                lastPosition = currentPosition;
 
-                camera.Yaw += deltaX * sensitivity;
-                camera.Pitch -= deltaY * sensitivity;
+                // Updates the camera's orientation on the x- and y-axis and is multiplied by mouse sensitivity
+                camera.Yaw += deltaX * mouseSensitivity;
+                camera.Pitch -= deltaY * mouseSensitivity;
             }
         }
 
@@ -150,7 +171,44 @@ namespace Project_FPS
         {
             base.OnMouseWheel(args);
 
-            camera.Fov -= args.OffsetY;
+            float zoomSpeed = 10f;
+
+            if (args.OffsetY >= 0f)
+            {
+                //camera.FOV = 45.0f;
+                if (camera.FOV <= 100f)
+                {
+                    camera.FOV -= zoomSpeed;
+                }
+            }
+            else if (args.OffsetY <= 0f)
+            {
+                //camera.FOV = 1.0f;
+                if (camera.FOV >= 10f)
+                {
+                    camera.FOV += zoomSpeed;
+                }
+            }
+            //if (args.OffsetY >= 45.0f)
+            //{
+            //    camera.Fov = 45.0f;
+            //}
+            //else if (camera.Fov <= 1.0f)
+            //{
+            //    camera.Fov = 1.0f;
+            //}
+            //else
+            //{
+            //    camera.Fov -= args.OffsetY;
+            //}
+
+            //float zoomSpeed = 1f;
+            //float zoomAmount = args.OffsetY * zoomSpeed;
+            //Vector3 dir = camera.front * zoomSpeed;
+
+            //camera.Fov += dir;
+            
+            //camera.Fov -= args.OffsetY;
         }
 
         #endregion
