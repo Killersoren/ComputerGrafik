@@ -9,7 +9,7 @@ namespace Project_FPS
         Vector3 front = new Vector3(0.0f, 0.0f, -1.0f);
         Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
         Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
-        float speed = 3;
+        float speed;
         // Rotation around the Y axis (radians)
         private float FOV = MathHelper.PiOver2;
         private float aspectX;
@@ -104,9 +104,51 @@ namespace Project_FPS
             up = Vector3.Normalize(Vector3.Cross(right, front));
         }
 
+        
+        private bool isJumping = false;
+        //private float jumpTime = 0.0f;
+        private float jumpHeight = 1.0f;
+        private float fallSpeed = 1.5f;
+
+        private bool isCrouching = false;
+        private float crouchHeight = -0.25f;
+
         public override void Update(FrameEventArgs args)
         {
             KeyboardState input = window.KeyboardState;
+
+            // Crouching
+            if (input.IsKeyDown(Keys.LeftControl))
+            {
+                gameObject.transform.Position = new Vector3(
+                    gameObject.transform.Position.X,
+                    crouchHeight,
+                    gameObject.transform.Position.Z
+                );
+
+                isCrouching = true;
+            }
+            else
+            {
+                gameObject.transform.Position = new Vector3(
+                    gameObject.transform.Position.X,
+                    crouchHeight + 0.25f,
+                    gameObject.transform.Position.Z
+                );
+
+                isCrouching = false;
+            }
+
+            // Movement speed
+            if (isCrouching)
+            {
+                speed = 1.0f;
+            }
+            else
+            {
+                speed = 3.0f;
+            }
+
             //if (input.IsKeyDown(Keys.W))
             //{
             //    gameObject.transform.Position += front * speed * (float)args.Time; //Forward 
@@ -123,16 +165,67 @@ namespace Project_FPS
             //{
             //    gameObject.transform.Position += /*Vector3.Normalize(Vector3.Cross(front, up))*/right * speed * (float)args.Time; //Right
             //}
-            if (input.IsKeyDown(Keys.Space))
+
+            // Check for jump key
+            if (input.IsKeyPressed(Keys.Space) && !isJumping)
             {
-                gameObject.transform.Position += up * speed * (float)args.Time; //Up 
+                isJumping = true;
+                //jumpTime = 0.0f;
             }
 
-            if (input.IsKeyDown(Keys.LeftShift))
+            // jump
+            if (isJumping)
             {
-                gameObject.transform.Position -= up * speed * (float)args.Time; //Down
+                //float jumpOffset = (float)Math.Sin(jumpTime * 10f) * jumpHeight;
+                gameObject.transform.Position = new Vector3(
+                    gameObject.transform.Position.X,
+                    /*jumpOffset + */jumpHeight,
+                    gameObject.transform.Position.Z
+                );
+
+                jumpHeight -= fallSpeed * ((float)args.Time);
+
+                if (jumpHeight <= 0.0f)
+                {
+                    jumpHeight = 1.0f;
+                    isJumping = false;
+                }
             }
 
+            //// Check for crouch key
+            //if (input.IsKeyDown(Keys.LeftShift))
+            //{
+            //    isCrouching = true;
+            //}
+
+            //// Crouch
+            //if (isCrouching)
+            //{
+            //    gameObject.transform.Position = new Vector3(
+            //        gameObject.transform.Position.X,
+            //        crouchHeight,
+            //        gameObject.transform.Position.Z
+            //    );
+
+            //    //crouchHeight += fallSpeed * (float)args.Time;
+
+            //    //if (crouchHeight >= 0.0f)
+            //    //{
+            //    //    crouchHeight = -0.5f;
+            //    //    isCrouching = false;
+            //    //}
+            //}
+
+            //if (input.IsKeyReleased(Keys.LeftShift))
+            //{
+            //    crouchHeight += fallSpeed * (float)args.Time;
+
+            //    if (crouchHeight >= 0.0f)
+            //    {
+            //        crouchHeight = -0.5f;
+            //        isCrouching = false;
+            //    }
+            //}
 
 
 
@@ -156,13 +249,18 @@ namespace Project_FPS
 
 
 
+
+            
+
+
             // with camera orientation but cannot move on the y-axis
             Vector3 forward = new Vector3(front.X, 0, front.Z);
             Vector3 rightDir = new Vector3(right.X, 0, right.Z);
-            
+
             if (input.IsKeyDown(Keys.W))
             {
                 gameObject.transform.Position += Vector3.Normalize(forward) * speed * (float)args.Time; // Forward 
+                //gameObject.transform.Position += up * verticalOffset;
             }
             if (input.IsKeyDown(Keys.S))
             {
