@@ -15,7 +15,8 @@ namespace Opgave_1___OpenTK
     internal class Game : GameWindow
 
     {
-        
+        private Model CactusModel;
+
 
         float rotation = 45;
 
@@ -55,6 +56,13 @@ namespace Opgave_1___OpenTK
             //GL.BindVertexArray(vaoHandle);
             //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
             //GL.DrawElements(PrimitiveType.Triangles, numElements, DrawElementsType.UnsignedInt, 0);
+
+            foreach (Mesh mesh in CactusModel.meshes)
+            {
+                GL.BindVertexArray(mesh.VAO);
+                GL.DrawElements(PrimitiveType.Triangles, mesh.indicesCount, DrawElementsType.UnsignedInt, 0);
+                GL.BindVertexArray(0);
+            }
 
 
             SwapBuffers();
@@ -166,7 +174,16 @@ namespace Opgave_1___OpenTK
             GameObject modelGameObject = new GameObject(rendModel, this);
 
 
+
             gameObjects.Add(modelGameObject);
+
+            CactusModel = new Model("Models/Cactus/cactus.obj");
+
+
+            Renderer rendModel2 = new Renderer(mat, CactusModel);
+
+            GameObject cactusGameObject = new GameObject(CactusModel, this);
+
 
             //// Create vertex buffer
             //GL.GenBuffers(1, out vboHandle);
