@@ -1,4 +1,5 @@
-﻿using OpenTK.Mathematics;
+﻿using ClassLibrary;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Opgave_1___OpenTK.RendererStuff
         {
             this.material = material;
             this.model = model;
-            Console.WriteLine("model elements number " + model.NumElements);
+            //Console.WriteLine("model elements number " + model.NumElements);
         }
         
         public virtual void Draw(Matrix4 mvp)
@@ -38,7 +39,7 @@ namespace Opgave_1___OpenTK.RendererStuff
         {
             material.UseShader();
             material.SetUniform("mvp", mvp);
-            model.Draw();
+         //   model.Draw();
         }
 
 

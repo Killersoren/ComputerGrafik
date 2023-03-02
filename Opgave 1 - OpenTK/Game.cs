@@ -9,10 +9,13 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Mathematics;
 using Opgave_1___OpenTK.RendererStuff;
+using ClassLibrary;
+using Mesh = ClassLibrary.Mesh;
+using System.Diagnostics;
 
 namespace Opgave_1___OpenTK
 {
-    internal class Game : GameWindow
+    public class Game : GameWindow
 
     {
         private Model CactusModel;
@@ -28,8 +31,17 @@ namespace Opgave_1___OpenTK
 
 
         float scale3D = 1;
+        Stopwatch stopwatch = new Stopwatch();
 
         float position3D;
+
+        Camera camera;
+        private bool firstMove = true;
+        private Vector2 lastPosition; // The camera's last position
+
+        private float fieldOfView = 60.0f; // Determines how much of the scene i visible through the camera lens.
+        private float nearClipPlane = 0.3f; // The distance from the camera to the near clipping plane. It's the closest distance from the camera at which objects will be rendered.
+        private float farClipPlane = 1000.0f; // The distance from the camera to the far clipping plane. The farthest distance from the camera at which objects will be rendered
 
         List<GameObject> gameObjects = new List<GameObject> ();
 
@@ -49,7 +61,10 @@ namespace Opgave_1___OpenTK
             Matrix4 view = Matrix4.CreateTranslation(0.0f, 0, -3f);
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60.0f),
             (float)Size.X / (float)Size.Y, 0.3f, 1000.0f);
-            gameObjects.ForEach(x => x.Draw(view * projection));
+         //   gameObjects.ForEach(x => x.Draw(view * projection));
+
+            gameObjects.ForEach(x => x.Draw(camera.GetViewMatrix()));
+
 
 
             ////3D model test stuff
@@ -73,7 +88,33 @@ namespace Opgave_1___OpenTK
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
+
+            const float sensitivity = 0.2f;
+
             gameObjects.ForEach(x => x.Update(args));
+
+            KeyboardState input = KeyboardState;
+            MouseState mouse = MouseState;
+
+            if (input.IsKeyDown(Keys.Escape))
+            {
+                Close();
+            }
+
+            if (firstMove)
+            {
+                lastPosition = new Vector2(mouse.X, mouse.Y);
+                firstMove = false;
+            }
+            else
+            {
+                var deltaX = mouse.X - lastPosition.X;
+                var deltaY = mouse.Y - lastPosition.Y;
+                lastPosition = new Vector2(mouse.X, mouse.Y);
+
+                camera.Yaw += deltaX * sensitivity;
+                camera.Pitch -= deltaY * sensitivity;
+            }
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -162,20 +203,20 @@ namespace Opgave_1___OpenTK
 
 
             //3D model test stuff
-            var loader = new ObjLoader();
+            //var loader = new ObjLoader();
 
-            var model = loader.Load("Models/cactus.obj");
+            //var model = loader.Load("Models/cactus.obj");
             //var model = loader.Load("Models/Cup.obj");
 
-            Renderer rendModel = new Renderer(mat, model);
+          //  Renderer rendModel = new Renderer(mat, model);
 
         //    GameObject modelGameObject = new GameObject(model, this);
 
-            GameObject modelGameObject = new GameObject(rendModel, this);
+           // GameObject modelGameObject = new GameObject(rendModel, this);
 
 
 
-            gameObjects.Add(modelGameObject);
+          //  gameObjects.Add(modelGameObject);
 
             CactusModel = new Model("Models/Cactus/cactus.obj");
 
@@ -183,6 +224,18 @@ namespace Opgave_1___OpenTK
             Renderer rendModel2 = new Renderer(mat, CactusModel);
 
             GameObject cactusGameObject = new GameObject(CactusModel, this);
+
+
+            // Creates a camera GameObject by passing null and the current GameWindow object (this)
+            GameObject cam = new GameObject(this);
+            // AddComponent method adds a new Camera component to a GameObject
+            // The Camera's constructor takes 4 parameters: fieldOfView, aspectRatio(x,y), nearClipPlane, farClipPlane
+            // The aspectRatio here is the Size of the GameWindow's window size. It is the ratio of the width and height of the camera's view.
+            cam.AddComponent<Camera>(fieldOfView, (float)Size.X, (float)Size.Y, nearClipPlane, farClipPlane);
+            // The Camera class is set equal to the camera GameObject
+            camera = cam.GetComponent<Camera>();
+            // The camera is added to the list of GameObjects
+            gameObjects.Add(cam);
 
 
             //// Create vertex buffer
@@ -202,10 +255,6 @@ namespace Opgave_1___OpenTK
             //GL.EnableVertexAttribArray(0);
             //GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
 
-            model.transform.Position = (-1, 0, 0);
-            //Console.WriteLine(model.transform.Position);
-
-            Console.WriteLine("elements count " + model.NumElements);
 
 
             // Load shaders
