@@ -15,7 +15,7 @@ namespace Opgave_1___OpenTK.RendererStuff
         public Transform transform;
         public Renderer renderer;
         protected GameWindow gameWindow;
-        public Model model;
+        public Model3d model;
         List<Behaviour> behaviours = new List<Behaviour>();
 
 
@@ -34,7 +34,7 @@ namespace Opgave_1___OpenTK.RendererStuff
             Console.WriteLine("renderer " + renderer.ToString());
         }
 
-        public GameObject(Model model, GameWindow gameWindow)
+        public GameObject(Model3d model, GameWindow gameWindow)
         {
             //renderer = new ModelRenderer(model);
             this.model = model;

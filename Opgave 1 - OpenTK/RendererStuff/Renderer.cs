@@ -11,7 +11,7 @@ namespace Opgave_1___OpenTK.RendererStuff
     public class Renderer
     {
         public Material material;
-        public Model model;
+        public Model3d model;
         public Mesh mesh;
         public Renderer(Material material, Mesh mesh)
         {
@@ -20,7 +20,7 @@ namespace Opgave_1___OpenTK.RendererStuff
           //  Console.WriteLine("mesh " + mesh.ToString());
         }
 
-        public Renderer(Material material, Model model)
+        public Renderer(Material material, Model3d model)
         {
             this.material = material;
             this.model = model;

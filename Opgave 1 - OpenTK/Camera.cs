@@ -93,12 +93,24 @@ namespace Opgave_1___OpenTK
         #endregion
 
         #region Methods
-        // Get the view matrix using the amazing LookAt function described more in depth on the web tutorials
+        // Get the view matrix using the LookAt function
         public Matrix4 GetViewMatrix()
         {
             Matrix4 view = Matrix4.LookAt(gameObject.transform.Position, gameObject.transform.Position + front, up);
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FOV), aspectX / aspectY, near, far);
             return view * projection;
+        }
+        public Matrix4 GetViewMatrix2()
+        {
+            Matrix4 view = Matrix4.LookAt(gameObject.transform.Position, gameObject.transform.Position + front, up);
+            return view;
+        }
+
+        // Get the projection matrix using the CreatePerspectiveFieldOfView function
+        public Matrix4 GetProjectionMatrix()
+        {
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FOV), aspectX / aspectY, near, far);
+            return projection;
         }
 
         // This function is going to update the direction vertices using some of the math learned in the web tutorials.

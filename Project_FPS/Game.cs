@@ -192,8 +192,8 @@ namespace Project_FPS
 
 
 
-        #region ClassLibrary Project
-        //private Model crateModel;
+        //#region ClassLibrary Project
+        //private Model3d crateModel;
         //private Shader crateShader;
         //private Texture crateTexture;
 
@@ -218,7 +218,7 @@ namespace Project_FPS
 
         //    // Here we import the model object, texture and define our Shader.
         //    // For now we are just using a simple shader which just samples the texture.
-        //    crateModel = new Model("Resources/Crate/woodencrate_dir.fbx");
+        //    crateModel = new Model3d("Resources/Crate/woodencrate_dir.fbx");
         //    crateTexture = Texture.LoadFromFile("Resources/Crate/boxtexture_dir.png");
         //    crateShader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
 
@@ -328,6 +328,6 @@ namespace Project_FPS
         //    GL.Viewport(0, 0, Size.X, Size.Y);
         //    camera.AspectRatio = Size.X / (float)Size.Y;
         //}
-        #endregion
+        //#endregion
     }
 }
