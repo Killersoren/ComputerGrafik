@@ -38,6 +38,8 @@ namespace Opgave_1___OpenTK
         Camera camera;
         private bool firstMove = true;
         private Vector2 lastPosition; // The camera's last position
+        const float mouseSensitivity = 0.2f;
+
 
         private float fieldOfView = 60.0f; // Determines how much of the scene i visible through the camera lens.
         private float nearClipPlane = 0.3f; // The distance from the camera to the near clipping plane. It's the closest distance from the camera at which objects will be rendered.
@@ -61,8 +63,8 @@ namespace Opgave_1___OpenTK
             Matrix4 view = Matrix4.CreateTranslation(0.0f, 0, -3f);
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60.0f),
             (float)Size.X / (float)Size.Y, 0.3f, 1000.0f);
-         //   gameObjects.ForEach(x => x.Draw(view * projection));
 
+            // ForEach-loop which draws every camera in the list of gameObjects (with the camera's view matrix)
             gameObjects.ForEach(x => x.Draw(camera.GetViewMatrix()));
 
 
@@ -79,7 +81,8 @@ namespace Opgave_1___OpenTK
                 GL.BindVertexArray(0);
             }
 
-
+            // Swaps the front and back buffers of the game window
+            // to display the rendered frame on the screen
             SwapBuffers();
         }
 
@@ -91,29 +94,37 @@ namespace Opgave_1___OpenTK
 
             const float sensitivity = 0.2f;
 
+            // ForEach-loop which updates every game object in the list of gameObjects
             gameObjects.ForEach(x => x.Update(args));
 
             KeyboardState input = KeyboardState;
             MouseState mouse = MouseState;
+            Vector2 currentPosition = new Vector2(mouse.X, mouse.Y);
 
+
+            // Press Escape to close the game window
             if (input.IsKeyDown(Keys.Escape))
             {
                 Close();
             }
 
+            // Indicates if this is the first time the mouse has been moved.
             if (firstMove)
             {
-                lastPosition = new Vector2(mouse.X, mouse.Y);
+                lastPosition = currentPosition;
                 firstMove = false;
             }
             else
             {
-                var deltaX = mouse.X - lastPosition.X;
-                var deltaY = mouse.Y - lastPosition.Y;
-                lastPosition = new Vector2(mouse.X, mouse.Y);
+                // Calculates the change in the mouse position since the last frame.
+                var deltaX = currentPosition.X - lastPosition.X;
+                var deltaY = currentPosition.Y - lastPosition.Y;
+                // lastPosition is set to the current mouse position.
+                lastPosition = currentPosition;
 
-                camera.Yaw += deltaX * sensitivity;
-                camera.Pitch -= deltaY * sensitivity;
+                // Updates the camera's orientation on the x- and y-axis and is multiplied by mouse sensitivity
+                camera.Yaw += deltaX * mouseSensitivity;
+                camera.Pitch -= deltaY * mouseSensitivity;
             }
         }
 
@@ -176,6 +187,9 @@ namespace Opgave_1___OpenTK
         protected override void OnLoad()
         {
             base.OnLoad();
+            CursorState = CursorState.Hidden;
+            CursorState = CursorState.Grabbed;
+
             texture0 = new Texture("Textures/wall.jpg");
             texture1 = new Texture("Textures/TorbenHD.png");
             Dictionary<string, object> uniforms = new Dictionary<string, object>();
@@ -191,32 +205,12 @@ namespace Opgave_1___OpenTK
             //cube.AddComponent<MoveUpDownBehaviour>();
             gameObjects.Add(cube);
             cube.transform.Position = (1,0,0);
-
-
-           // GameObject cam = new GameObject(null, this);
-            //cam.AddComponent<Camera>(60.0f, (float)Size.X, (float)Size.Y, 0.3f, 1000.0f);
-            //camera = cam.GetComponent<Camera>();
-          //  gameObjects.Add(cam);
             GL.Enable(EnableCap.DepthTest);
             // watch.Start();
 
 
 
             //3D model test stuff
-            //var loader = new ObjLoader();
-
-            //var model = loader.Load("Models/cactus.obj");
-            //var model = loader.Load("Models/Cup.obj");
-
-          //  Renderer rendModel = new Renderer(mat, model);
-
-        //    GameObject modelGameObject = new GameObject(model, this);
-
-           // GameObject modelGameObject = new GameObject(rendModel, this);
-
-
-
-          //  gameObjects.Add(modelGameObject);
 
             CactusModel = new Model("Models/Cactus/cactus.obj");
 
@@ -230,7 +224,8 @@ namespace Opgave_1___OpenTK
             GameObject cam = new GameObject(this);
             // AddComponent method adds a new Camera component to a GameObject
             // The Camera's constructor takes 4 parameters: fieldOfView, aspectRatio(x,y), nearClipPlane, farClipPlane
-            // The aspectRatio here is the Size of the GameWindow's window size. It is the ratio of the width and height of the camera's view.
+            // The aspect ratio here is the Size of the GameWindow's window size.
+            // The aspect ratio is the ratio of the width and height of the camera's view (Size.X, Size.Y).
             cam.AddComponent<Camera>(fieldOfView, (float)Size.X, (float)Size.Y, nearClipPlane, farClipPlane);
             // The Camera class is set equal to the camera GameObject
             camera = cam.GetComponent<Camera>();
@@ -265,11 +260,33 @@ namespace Opgave_1___OpenTK
         protected override void OnUnload()
         {
             base.OnUnload();
+            // Binds an empty buffer to the ArrayBuffer target, which unbinds any previous bound buffer.
+            // This is good practice. It ensures that any resources bound to the graphics pipeline are
+            // released when the game window is closed.
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.DeleteBuffer(VertexBufferObject);
         }
 
-         void CalculateAndSetTransform()
+
+        protected override void OnMouseWheel(MouseWheelEventArgs args)
+        {
+            base.OnMouseWheel(args);
+
+            float maxFov = fieldOfView;
+            float minFov = 10.0f;
+
+            if (args.OffsetY <= 0f && camera.FOV <= maxFov)
+            {
+                camera.FOV = maxFov;
+            }
+            else if (args.OffsetY >= 0f && camera.FOV >= minFov)
+            {
+                camera.FOV = minFov;
+                camera.FOV += (float)args.OffsetY;
+            }
+        }
+
+
+        void CalculateAndSetTransform()
         {
             Matrix4 trs = Matrix4.Identity;
             Matrix4 srt = Matrix4.Identity;
