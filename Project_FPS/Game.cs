@@ -44,7 +44,7 @@ namespace Project_FPS
             // Used to access the settings for the game window
             settings = nativeWindowSettings;
             // The game window is centered in the center of the screen
-            this.CenterWindow();
+            //this.CenterWindow();
         }
         #endregion
 
@@ -53,7 +53,8 @@ namespace Project_FPS
         {
             base.OnLoad();
 
-            CursorState = CursorState.Hidden;
+            // In this state, the mouse cursor is hidden and its
+            // position is locked to the center of the game window
             CursorState = CursorState.Grabbed;
 
             // Creates two textures for the CubeMesh
@@ -128,7 +129,7 @@ namespace Project_FPS
         {
             base.OnUpdateFrame(args);
 
-            if (!IsFocused) // Check to see if the window is focused
+            if (!IsFocused) // Checks if the game window is in focus
             {
                 return;
             }
@@ -177,11 +178,15 @@ namespace Project_FPS
             float maxFov = fieldOfView;
             float minFov = 10.0f;
 
-            if (args.OffsetY <= 0f && camera.FOV <= maxFov)
+            // if the mouse wheels y offset is less than 0 and the camera's
+            // fov is less than the max fov, zoom out to the max fov
+            if (args.OffsetY <= 0.0f && camera.FOV <= maxFov)
             {
                 camera.FOV = maxFov;
             }
-            else if (args.OffsetY >= 0f && camera.FOV >= minFov)
+            // if the mouse wheels y offset is bigger than 0 and the camera's
+            // fov is bigger than the min fov, you can zoom-in to the min fov
+            else if (args.OffsetY >= 0.0f && camera.FOV >= minFov)
             {
                 camera.FOV = minFov;
                 camera.FOV += (float)args.OffsetY;
