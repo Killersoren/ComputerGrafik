@@ -39,17 +39,19 @@ namespace Opgave_1___OpenTK
         #endregion
 
         #region Properties
-        // We convert from degrees to radians as soon as the property is set to improve performance.
+
+        // Up-down rotation of the camera
         public float Pitch
         {
             get => MathHelper.RadiansToDegrees(pitch);
             set
             {
-                // We clamp the pitch value between -89 and 89 to prevent the camera from going upside down, and a bunch
-                // of weird "bugs" when you are using euler angles for rotation.
-                // If you want to read more about this you can try researching a topic called gimbal lock
+                // Clamps the pitch value between -89 and 89 to prevent the camera from reversing,
+                // and some other weird "bugs" when using euler angles for rotation.
                 var angle = MathHelper.Clamp(value, -89f, 89f);
+                // Converts from degrees to radians (improves performance)
                 pitch = MathHelper.DegreesToRadians(angle);
+                // Updates the camera's pitch angle
                 UpdateVectors();
             }
         }
@@ -66,8 +68,6 @@ namespace Opgave_1___OpenTK
         }
 
         // The field of view (FOV) is the vertical angle of the camera view.
-        // This has been discussed more in depth in a previous tutorial,
-        // but in this tutorial, you have also learned how we can use this to simulate a zoom feature.
         // We convert from degrees to radians as soon as the property is set to improve performance.
         public float Fov
         {

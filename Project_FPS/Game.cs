@@ -53,7 +53,7 @@ namespace Project_FPS
         {
             base.OnLoad();
 
-            CursorState = CursorState.Hidden;
+            //CursorState = CursorState.Hidden;
             CursorState = CursorState.Grabbed;
 
             // Creates two textures for the CubeMesh
