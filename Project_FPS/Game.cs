@@ -53,6 +53,9 @@ namespace Project_FPS
         {
             base.OnLoad();
 
+            CursorState = CursorState.Hidden;
+            CursorState = CursorState.Grabbed;
+
             // Creates two textures for the CubeMesh
             texture0 = new Texture("Textures/box_side.png");
             texture1 = new Texture("Textures/box_x2.png");
@@ -171,44 +174,18 @@ namespace Project_FPS
         {
             base.OnMouseWheel(args);
 
-            float zoomSpeed = 10f;
+            float maxFov = fieldOfView;
+            float minFov = 10.0f;
 
-            if (args.OffsetY >= 0f)
+            if (args.OffsetY <= 0f && camera.FOV <= maxFov)
             {
-                //camera.FOV = 45.0f;
-                if (camera.FOV <= 100f)
-                {
-                    camera.FOV -= zoomSpeed;
-                }
+                camera.FOV = maxFov;
             }
-            else if (args.OffsetY <= 0f)
+            else if (args.OffsetY >= 0f && camera.FOV >= minFov)
             {
-                //camera.FOV = 1.0f;
-                if (camera.FOV >= 10f)
-                {
-                    camera.FOV += zoomSpeed;
-                }
+                camera.FOV = minFov;
+                camera.FOV += (float)args.OffsetY;
             }
-            //if (args.OffsetY >= 45.0f)
-            //{
-            //    camera.Fov = 45.0f;
-            //}
-            //else if (camera.Fov <= 1.0f)
-            //{
-            //    camera.Fov = 1.0f;
-            //}
-            //else
-            //{
-            //    camera.Fov -= args.OffsetY;
-            //}
-
-            //float zoomSpeed = 1f;
-            //float zoomAmount = args.OffsetY * zoomSpeed;
-            //Vector3 dir = camera.front * zoomSpeed;
-
-            //camera.Fov += dir;
-            
-            //camera.Fov -= args.OffsetY;
         }
 
         #endregion
