@@ -80,12 +80,12 @@ namespace Opgave_1___OpenTK
             Renderer rend2 = new Renderer(mat, new CubeMesh());
             GameObject triangle = new GameObject(rend, this);
             gameObjects.Add(triangle);
-            triangle.transform.Position = (-2, 0, 0);
+            triangle.transform.Position = (-2.0f, 0.5f, 0.0f);
             GameObject cube = new GameObject(rend2, this);
             //cube.AddComponent<MoveLeftRightBehaviour>();
             //cube.AddComponent<MoveUpDownBehaviour>();
             gameObjects.Add(cube);
-            cube.transform.Position = (2, 0, 0);
+            cube.transform.Position = (2.0f, 0.5f, 0.0f);
             GL.Enable(EnableCap.DepthTest);
             // watch.Start();
 
@@ -128,7 +128,6 @@ namespace Opgave_1___OpenTK
             //GL.BindVertexArray(vaoHandle);
             //GL.EnableVertexAttribArray(0);
             //GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-
 
 
             // Load shaders
@@ -289,7 +288,6 @@ namespace Opgave_1___OpenTK
         //private int vertexArrayObject;
         //int VertexBufferObject;
         //int elementBufferObject;
-
 
         protected override void OnMouseWheel(MouseWheelEventArgs args)
         {

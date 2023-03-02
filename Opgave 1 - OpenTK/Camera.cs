@@ -9,19 +9,19 @@ namespace Opgave_1___OpenTK
     public class Camera : Behaviour
     {
         #region Fields
-        public Vector3 front = new Vector3(0.0f, 0.0f, -1.0f);
+        Vector3 front = new Vector3(0.0f, 0.0f, -1.0f);
         Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
         Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
 
         private float speed;
         // Jump variables
-        private float jumpHeight = 1.0f;
+        private float jumpHeight = 2.0f;
         private float fallSpeed = 1.5f;
         private bool isJumping = false;
         // Crouch variables
         private float standingHeight = 0.0f;
-        private float crouchHeight = -0.25f;
-        private float heightOffset = 0.0f;
+        private float crouchHeight = 0.25f;
+        private float heightOffset = 1.0f;
         private bool isCrouching = false;
 
         // Rotation around the Y axis (radians)
@@ -43,6 +43,7 @@ namespace Opgave_1___OpenTK
         // Up-down rotation of the camera
         public float Pitch
         {
+            // Converts from radians to degrees(improves performance)
             get => MathHelper.RadiansToDegrees(pitch);
             set
             {
@@ -51,30 +52,35 @@ namespace Opgave_1___OpenTK
                 var angle = MathHelper.Clamp(value, -89f, 89f);
                 // Converts from degrees to radians (improves performance)
                 pitch = MathHelper.DegreesToRadians(angle);
-                // Updates the camera's pitch angle
+                // Updates the camera's direction based on the new pitch value
                 UpdateVectors();
             }
         }
 
-        // We convert from degrees to radians as soon as the property is set to improve performance.
+        // Right-left rotation of the camera
         public float Yaw
         {
+            // Converts from radians to degrees(improves performance)
             get => MathHelper.RadiansToDegrees(yaw);
             set
             {
+                // Converts from degrees to radians (improves performance)
                 yaw = MathHelper.DegreesToRadians(value);
+                // Updates the camera's direction based on the new yaw value
                 UpdateVectors();
             }
         }
 
         // The field of view (FOV) is the vertical angle of the camera view.
-        // We convert from degrees to radians as soon as the property is set to improve performance.
         public float Fov
         {
+            // Converts from radians to degrees(improves performance)
             get => MathHelper.RadiansToDegrees(FOV);
             set
             {
+                // Clamp the input angle between 1 and 90 degrees.
                 var angle = MathHelper.Clamp(value, 1f, 90f);
+                // Converts from degrees to radians (improves performance)
                 FOV = MathHelper.DegreesToRadians(angle);
             }
         }
@@ -113,20 +119,18 @@ namespace Opgave_1___OpenTK
             return projection;
         }
 
-        // This function is going to update the direction vertices using some of the math learned in the web tutorials.
+        // Uupdate the direction vertices.
         private void UpdateVectors()
         {
-            // First, the front matrix is calculated using some basic trigonometry.
+            // The front matrix is calculated using some basic trigonometry.
             front.X = MathF.Cos(pitch) * MathF.Cos(yaw);
             front.Y = MathF.Sin(pitch);
             front.Z = MathF.Cos(pitch) * MathF.Sin(yaw);
 
-            // We need to make sure the vectors are all normalized, as otherwise we would get some funky results.
+            // Make sure that the vectors are all normalized.
             front = Vector3.Normalize(front);
 
             // Calculate both the right and the up vector using cross product.
-            // Note that we are calculating the right from the global up; this behaviour might
-            // not be what you need for all cameras so keep this in mind if you do not want a FPS camera.
             right = Vector3.Normalize(Vector3.Cross(front, Vector3.UnitY));
             up = Vector3.Normalize(Vector3.Cross(right, front));
         }
@@ -152,7 +156,7 @@ namespace Opgave_1___OpenTK
             }
             else
             {
-                heightOffset = 0.0f;
+                heightOffset = 1.0f;
                 speed = 3.0f;
             }
 
@@ -167,13 +171,11 @@ namespace Opgave_1___OpenTK
             if (input.IsKeyPressed(Keys.Space) && !isJumping)
             {
                 isJumping = true;
-                //jumpTime = 0.0f;
             }
 
             // jump
             if (isJumping)
             {
-                //float jumpOffset = (float)Math.Sin(jumpTime * 10f) * jumpHeight;
                 gameObject.transform.Position = new Vector3(
                     gameObject.transform.Position.X,
                     jumpHeight,
@@ -182,9 +184,9 @@ namespace Opgave_1___OpenTK
 
                 jumpHeight -= fallSpeed * ((float)args.Time);
 
-                if (jumpHeight <= 0.0f)
+                if (jumpHeight <= 1.0f)
                 {
-                    jumpHeight = 1.0f;
+                    jumpHeight = 2.0f;
                     isJumping = false;
                 }
             }

@@ -13,7 +13,7 @@ GameWindowSettings settings = new GameWindowSettings()
 
 NativeWindowSettings nativeWindowSettings = new NativeWindowSettings()
 {
-    Size = new Vector2i(800, 600),
+    Size = new Vector2i(1280, 720),
     Title = "Bazinga"
 };
 
