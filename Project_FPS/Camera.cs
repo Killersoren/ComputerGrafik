@@ -91,7 +91,6 @@ namespace Project_FPS
         #endregion
 
         #region Methods
-        // Get the view matrix using the amazing LookAt function described more in depth on the web tutorials
         public Matrix4 GetViewMatrix()
         {
             Matrix4 view = Matrix4.LookAt(gameObject.transform.Position, gameObject.transform.Position + front, up);
@@ -99,20 +98,14 @@ namespace Project_FPS
             return view * projection;
         }
 
-        // This function is going to update the direction vertices using some of the math learned in the web tutorials.
         private void UpdateVectors()
         {
-            // First, the front matrix is calculated using some basic trigonometry.
             front.X = MathF.Cos(pitch) * MathF.Cos(yaw);
             front.Y = MathF.Sin(pitch);
             front.Z = MathF.Cos(pitch) * MathF.Sin(yaw);
 
-            // We need to make sure the vectors are all normalized, as otherwise we would get some funky results.
             front = Vector3.Normalize(front);
 
-            // Calculate both the right and the up vector using cross product.
-            // Note that we are calculating the right from the global up; this behaviour might
-            // not be what you need for all cameras so keep this in mind if you do not want a FPS camera.
             right = Vector3.Normalize(Vector3.Cross(front, Vector3.UnitY));
             up = Vector3.Normalize(Vector3.Cross(right, front));
         }

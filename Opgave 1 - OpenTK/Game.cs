@@ -1,44 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Mathematics;
-using OpenTK.Input;
-using OpenTK.Windowing.Common.Input;
 using Opgave_1___OpenTK.RendererStuff;
 using ClassLibrary;
-//using Mesh3d = ClassLibrary.Mesh3d;
-using System.Diagnostics;
 
 namespace Opgave_1___OpenTK
 {
     public class Game : GameWindow
     {
+        #region Fields
         private Texture texture0;
         private Texture texture1;
 
         private Model3d enemyModel;
         private Shader3d enemyShader;
         private Texture3d enemyTexture;
-
-        //float rotation = 45;
-
-        //float rotationX3D = -55;
-
-        //float rotationY3D = -55;
-
-        //float rotationZ3D = -55;
-
-
-        //float scale3D = 1;
-        //Stopwatch stopwatch = new Stopwatch();
-
-        //float position3D;
 
         private Camera camera;
         private bool firstMove = true;
@@ -51,16 +29,16 @@ namespace Opgave_1___OpenTK
         private float farClipPlane = 1000.0f; // The distance from the camera to the far clipping plane. The farthest distance from the camera at which objects will be rendered
 
         List<GameObject> gameObjects = new List<GameObject>();
+        #endregion
 
-        //private int vaoHandle, vboHandle, eboHandle;
-        //private int numElements;
-
-
+        #region Constructor
         public Game(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
             GL.ClearColor(0.5f, 0.2f, 0.7f, 1.0f);
         }
+        #endregion
 
+        #region Methods
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -82,22 +60,14 @@ namespace Opgave_1___OpenTK
             gameObjects.Add(triangle);
             triangle.transform.Position = (-2.0f, 0.5f, 0.0f);
             GameObject cube = new GameObject(rend2, this);
-            //cube.AddComponent<MoveLeftRightBehaviour>();
-            //cube.AddComponent<MoveUpDownBehaviour>();
             gameObjects.Add(cube);
             cube.transform.Position = (2.0f, 0.5f, 0.0f);
             GL.Enable(EnableCap.DepthTest);
-            // watch.Start();
 
             // Load 3D model, texture and shader
             enemyModel = new Model3d("Models/Enemy/EnemyBug.fbx");
             enemyTexture = Texture3d.LoadFromFile("Models/Enemy/EnemyBug_color.png");
             enemyShader = new Shader3d("Shaders/shader2.vert", "Shaders/shader2.frag");
-
-            //Renderer rendModel2 = new Renderer(mat, enemyModel);
-
-            //GameObject cactusGameObject = new GameObject(enemyModel, this);
-
 
             // Creates a camera GameObject by passing the current GameWindow object (this)
             GameObject cam = new GameObject(this);
@@ -111,28 +81,6 @@ namespace Opgave_1___OpenTK
             // The camera is added to the list of GameObjects
             gameObjects.Add(cam);
 
-
-            //// Create vertex buffer
-            //GL.GenBuffers(1, out vboHandle);
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, vboHandle);
-            //GL.BufferData(BufferTarget.ArrayBuffer, model.Vertices.Length * Vector3.SizeInBytes, model.Vertices, BufferUsageHint.StaticDraw);
-
-            //// Create element buffer
-            //GL.GenBuffers(1, out eboHandle);
-            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
-            //GL.BufferData(BufferTarget.ElementArrayBuffer, model.Indices.Length * sizeof(int), model.Indices, BufferUsageHint.StaticDraw);
-            //numElements = model.Indices.Length;
-
-            //// Create vertex array object
-            //GL.GenVertexArrays(1, out vaoHandle);
-            //GL.BindVertexArray(vaoHandle);
-            //GL.EnableVertexAttribArray(0);
-            //GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-
-
-            // Load shaders
-            //shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
-            //shader.Use();
             enemyShader.Use();
         }
 
@@ -149,19 +97,9 @@ namespace Opgave_1___OpenTK
         {
             base.OnRenderFrame(args);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            //Matrix4 view = Matrix4.CreateTranslation(0.0f, 0, -3f);
-            //Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60.0f),
-            //(float)Size.X / (float)Size.Y, 0.3f, 1000.0f);
 
             // ForEach-loop which draws every camera in the list of gameObjects (with the camera's view matrix)
             gameObjects.ForEach(x => x.Draw(camera.GetViewMatrix()));
-
-
-
-            ////3D model test stuff
-            //GL.BindVertexArray(vaoHandle);
-            //GL.BindBuffer(BufferTarget.ElementArrayBuffer, eboHandle);
-            //GL.DrawElements(PrimitiveType.Triangles, numElements, DrawElementsType.UnsignedInt, 0);
 
             // Sets the uniform variable model to the identity matrix.
             // Translate, scale and rotate is set to the enemy objects default position
@@ -187,20 +125,14 @@ namespace Opgave_1___OpenTK
                 GL.BindVertexArray(0);
             }
 
-
-
             // Swaps the front and back buffers of the game window
             // to display the rendered frame on the screen
             SwapBuffers();
         }
 
-
-
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
-
-            const float sensitivity = 0.2f;
 
             // ForEach-loop which updates every game object in the list of gameObjects
             gameObjects.ForEach(x => x.Update(args));
@@ -236,59 +168,6 @@ namespace Opgave_1___OpenTK
             }
         }
 
-        //protected override void OnResize(ResizeEventArgs e)
-        //{
-        //    base.OnResize(e);
-
-        //    GL.Viewport(0, 0, e.Width, e.Height);
-        //}
-
-
-        //float[] vertices =
-        //    {
-        //        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-        //        0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-        //        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        //        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        //        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-        //        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-        //        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        //        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-        //        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-        //        0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-        //        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
-        //        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        //        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        //        -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        //        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        //        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        //        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        //        -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        //        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        //        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        //        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        //        0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        //        0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        //        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        //        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        //        0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-        //        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-        //        0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-        //        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-        //        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        //        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-        //        0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-        //        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        //        0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-        //        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-        //        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
-        //    };
-
-
-        //private int vertexArrayObject;
-        //int VertexBufferObject;
-        //int elementBufferObject;
-
         protected override void OnMouseWheel(MouseWheelEventArgs args)
         {
             base.OnMouseWheel(args);
@@ -310,41 +189,7 @@ namespace Opgave_1___OpenTK
                 camera.FOV = minFov;
             }
         }
-
-
-        //void CalculateAndSetTransform()
-        //{
-        //    Matrix4 trs = Matrix4.Identity;
-        //    Matrix4 srt = Matrix4.Identity;
-
-
-        //    Matrix4 t = Matrix4.CreateTranslation(new Vector3(0.5f, 0.5f, 0));
-        //    Matrix4 r = Matrix4.CreateRotationZ(rotation);
-        //    Matrix4 s = Matrix4.CreateScale(new Vector3(0.5f, 0.5f, 1));
-
-        //    trs = s * r * t;
-
-        //    srt = t * r * s;
-        //    shader.SetMatrix("transform", trs);
-
-        //    Matrix4 model = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(rotationX3D));
-
-        //    Matrix4.CreateRotationY(MathHelper.DegreesToRadians(rotationY3D));
-        //    Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(rotationZ3D));
-
-
-        //    Matrix4 view = Matrix4.CreateTranslation(0.0f, 0.0f, -3f);
-        //    Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), (float)Size.X / (float)Size.Y, 0.1f, 100.0f);
-        //    //shader.SetMatrix("model", model);
-        //    //shader.SetMatrix("view", view);
-        //    //shader.SetMatrix("projection", projection);
-
-        //    shader.SetMatrix("mvp", model * view * projection);
-        //}
-
+        #endregion
     }
-
-
-
 }
 

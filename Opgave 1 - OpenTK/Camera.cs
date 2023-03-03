@@ -24,7 +24,7 @@ namespace Opgave_1___OpenTK
         private float heightOffset = 1.0f;
         private bool isCrouching = false;
 
-        // Rotation around the Y axis (radians)
+        // Fov variables
         public float FOV = MathHelper.PiOver2;
         private float aspectX;
         private float aspectY;
@@ -70,20 +70,6 @@ namespace Opgave_1___OpenTK
                 UpdateVectors();
             }
         }
-
-        // The field of view (FOV) is the vertical angle of the camera view.
-        public float Fov
-        {
-            // Converts from radians to degrees(improves performance)
-            get => MathHelper.RadiansToDegrees(FOV);
-            set
-            {
-                // Clamp the input angle between 1 and 90 degrees.
-                var angle = MathHelper.Clamp(value, 1f, 90f);
-                // Converts from degrees to radians (improves performance)
-                FOV = MathHelper.DegreesToRadians(angle);
-            }
-        }
         #endregion
 
         #region Constructor
@@ -102,8 +88,10 @@ namespace Opgave_1___OpenTK
         // Get the view matrix using the LookAt function
         public Matrix4 GetViewMatrix()
         {
-            Matrix4 view = Matrix4.LookAt(gameObject.transform.Position, gameObject.transform.Position + front, up);
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(FOV), aspectX / aspectY, near, far);
+            Matrix4 view = Matrix4.LookAt(gameObject.transform.Position, 
+                gameObject.transform.Position + front, up);
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(
+                MathHelper.DegreesToRadians(FOV), aspectX / aspectY, near, far);
             return view * projection;
         }
         public Matrix4 GetViewMatrix2()
